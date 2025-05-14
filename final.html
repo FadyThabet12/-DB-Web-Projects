@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>final projects</title>
+  <link rel="stylesheet" href="final.css">
+</head>
+<body>
+  <div id="tablePage">
+    <h1>Todo List</h1>
+    <h1>Just Keep Going</h1>
+    <button onclick="goToForm()">Add</button>
+    <table id="competitionTable">
+      <thead>
+        <tr>
+          <th>Todo Title</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="formPage" class="hidden">
+    <h1 id="formTitle">Add Todo</h1>
+    <form id="competitionForm">
+      <label for="name">Todo Title:</label><br>
+      <input type="text" id="name" required><br>
+      <label for="area">Status (Completed / Not Completed):</label><br>
+      <input type="text" id="area" required><br>
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <script src="final.js"></script>
+</body>
+</html>

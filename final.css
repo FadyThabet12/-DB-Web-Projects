@@ -1,0 +1,54 @@
+.hidden {
+  display: none;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+button[onclick="goToForm()"] {
+  display: block;
+  margin: 0 auto 20px auto;
+  background-color: #007bff; 
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: hsl(125, 97%, 42%);
+  color: white;
+}
+.actions button {
+  padding: 5px 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.actions button {
+  background-color: #007bff;
+  color: white;
+}
+
