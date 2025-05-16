@@ -1,0 +1,31 @@
+*------------------*       *------------------+*
+|   Departments    |       |     Salaries      |
++------------------+       +-------------------+
+| DepartmentID (PK)|<--+   | SalaryID (PK)     |
+| Name             |   |   | EmployeeID (FK)   |
++-------=---------+    |   | BasicSalary       |
+                       |   | Bonus             |
+                       |   +-------------------+
+                       |
+                       |   +-------------------+
+                       +--<|     Employees      |
+                           +-------------------+
+                           | EmployeeID (PK)   |
+                           | Name              |
+                           | Email (Unique)    |
+                           | HireDate          |
+                           | DepartmentID (FK) |
+                           +-------------------+
+                                  |    |
+                 +----------------+    +---------------+
+                 |                                     |
+      +---------------------+               +----------------------+
+      |    LeaveRequests     |               ||     Evaluations      |
+      +---------------------+               +----------------------+
+      | RequestID (PK)       |               | EvaluationID (PK)    |
+      | EmployeeID (FK)      |               | EmployeeID (FK)      |
+      | StartDate            |               | EvalDate             |
+      | EndDate              |               | Score (1-10)         |
+      | Reason               |               | Comment              |
+      | Status               |               +----------------------+
+      +---------------------+
