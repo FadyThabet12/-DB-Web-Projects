@@ -1,0 +1,405 @@
+-- this file is the out put of all quiries i had used in the project
+mysql> create database HR_Management;
+Query OK, 1 row affected (0.561 sec)
+mysql> use  HR_Management;
+Database changed
+mysql> create table Departments( DepartmentID INT PRIMARY KEY AUTO_INCREMENT,Name VARCHAR(100) NOT NULL);
+Query OK, 0 rows affected (0.486 sec)
+> CREATE TABLE Employees (
+    ->     EmployeeID INT PRIMARY KEY AUTO_INCREMENT,
+    ->     Name VARCHAR(100),
+    ->     Email VARCHAR(100) UNIQUE,
+    ->     HireDate DATE,
+    ->     DepartmentID INT,
+    ->     FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+    -> );
+Query OK, 0 rows affected (1.700 sec)
+mysql> CREATE TABLE Salaries (
+    ->     SalaryID INT PRIMARY KEY AUTO_INCREMENT,
+    ->     EmployeeID INT UNIQUE,
+    ->     BasicSalary DECIMAL(10, 2),
+    ->     Bonus DECIMAL(10, 2),
+    ->     FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
+    -> );
+Query OK, 0 rows affected (1.544 sec)
+mysql> CREATE TABLE LeaveRequests (
+    ->     RequestID INT PRIMARY KEY AUTO_INCREMENT,
+    ->     EmployeeID INT,
+    ->     StartDate DATE,
+    ->     EndDate DATE,
+    ->     Reason TEXT,
+    ->     Status ENUM('Pending', 'Approved', 'Rejected'),
+    ->     FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
+    -> );
+Query OK, 0 rows affected (0.956 sec)
+mysql> 
+CREATE TABLE Evaluations (
+    ->     EvaluationID INT PRIMARY KEY AUTO_INCREMENT,
+    ->     EmployeeID INT,
+    ->     EvalDate DATE,
+    ->     Score INT CHECK (Score BETWEEN 1 AND 10),
+    ->     Comment TEXT,
+    ->     FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
+    -> );
+Query OK, 0 rows affected (0.719 sec)
+ INSERT INTO Departments (DepartmentID, Name) VALUES
+    -> (1, 'HR'),
+    -> (2, 'IT'),
+    -> (3, 'Finance'),
+    -> (4, 'Marketing'),
+    -> (5, 'Operations');
+Query OK, 5 rows affected (0.479 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO Employees (EmployeeID, Name, Email, HireDate, DepartmentID) VALUES
+    -> (201, 'Ali Hassan', 'ali.hassan@example.com', '2022-03-15', 1),
+    -> (202, 'Mona Saeed', 'mona.saeed@example.com', '2021-07-20', 2),
+    -> (203, 'Ahmed Nabil', 'ahmed.nabil@example.com', '2020-05-10', 3),
+    -> (204, 'Sara Mostafa', 'sara.mostafa@example.com', '2022-12-01', 1),
+    -> (205, 'Youssef Adel', 'youssef.adel@example.com', '2023-01-25', 2),
+    -> (206, 'Nour Magdy', 'nour.magdy@example.com', '2021-04-14', 3),
+    -> (207, 'Khaled Yassin', 'khaled.yassin@example.com', '2020-09-30', 2),
+    -> (208, 'Rana Sherif', 'rana.sherif@example.com', '2022-08-19', 1),
+    -> (209, 'Hany Fathy', 'hany.fathy@example.com', '2023-03-22', 3),
+    -> (210, 'Laila Amr', 'laila.amr@example.com', '2021-11-11', 2),
+    -> (211, 'Tamer Helmy', 'tamer.helmy@example.com', '2020-02-05', 3),
+    -> (212, 'Farida Ayman', 'farida.ayman@example.com', '2023-06-18', 1),
+    -> (213, 'Mahmoud Salah', 'mahmoud.salah@example.com', '2022-07-07', 2),
+    -> (214, 'Heba Zaki', 'heba.zaki@example.com', '2023-09-09', 1),
+    -> (215, 'Omar Reda', 'omar.reda@example.com', '2024-01-01', 3);
+Query OK, 15 rows affected (0.114 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+ INSERT INTO Salaries (SalaryID, EmployeeID, BasicSalary, Bonus) VALUES
+    -> (1, 201, 5000, 200),
+    -> (2, 202, 6000, 300),
+    -> (3, 203, 5500, 250),
+    -> (4, 204, 5800, 270),
+    -> (5, 205, 6200, 400),
+    -> (6, 206, 5300, 150),
+    -> (7, 207, 5100, 100),
+    -> (8, 208, 4950, 120),
+    -> (9, 209, 7000, 500),
+    -> (10, 210, 6700, 350),
+    -> (11, 211, 5600, 180),
+    -> (12, 212, 5250, 130),
+    -> (13, 213, 6100, 300),
+    -> (14, 214, 4800, 100),
+    -> (15, 215, 7500, 600);
+Query OK, 15 rows affected (0.170 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+> INSERT INTO LeaveRequests (RequestID, EmployeeID, StartDate, EndDate, Reason, Status) VALUES
+    -> (1, 201, '2024-01-10', '2024-01-15', 'Vacation', 'Approved'),
+    -> (2, 202, '2024-02-01', '2024-02-03', 'Medical', 'Pending'),
+    -> (3, 203, '2024-03-12', '2024-03-17', 'Emergency', 'Rejected'),
+    -> (4, 204, '2024-04-05', '2024-04-09', 'Personal', 'Approved'),
+    -> (5, 205, '2024-05-01', '2024-05-02', 'Sick', 'Approved'),
+    -> (6, 206, '2024-05-10', '2024-05-15', 'Maternity', 'Pending'),
+    -> (7, 207, '2024-06-01', '2024-06-06', 'Vacation', 'Approved'),
+    -> (8, 208, '2024-07-10', '2024-07-15', 'Emergency', 'Rejected'),
+    -> (9, 209, '2024-08-01', '2024-08-05', 'Travel', 'Approved'),
+    -> (10, 210, '2024-09-15', '2024-09-18', 'Personal', 'Approved'),
+    -> (11, 211, '2024-10-10', '2024-10-13', 'Sick', 'Pending'),
+    -> (12, 212, '2024-11-01', '2024-11-07', 'Vacation', 'Approved'),
+    -> (13, 213, '2024-12-05', '2024-12-10', 'Emergency', 'Rejected'),
+    -> (14, 214, '2025-01-01', '2025-01-04', 'Medical', 'Approved'),
+    -> (15, 215, '2025-02-10', '2025-02-12', 'Personal', 'Pending');
+Query OK, 15 rows affected (0.508 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Evaluations (EvaluationID, EmployeeID, EvalDate, Score, Comment) VALUES
+    -> (1, 201, '2024-01-15', 9, 'Great work ethic'),
+    -> (2, 202, '2024-01-20', 8, 'Good team player'),
+    -> (3, 203, '2024-02-01', 7, 'Improved performance'),
+    -> (4, 204, '2024-02-18', 6, 'Needs supervision'),
+    -> (5, 205, '2024-03-05', 9, 'Excellent contribution'),
+    -> (6, 206, '2024-03-25', 5, 'Below expectations'),
+    -> (7, 207, '2024-04-01', 8, 'Positive attitude'),
+    -> (8, 208, '2024-04-15', 10, 'Outstanding'),
+    -> (9, 209, '2024-05-01', 6, 'Average work'),
+    -> (10, 210, '2024-05-10', 7, 'Consistent'),
+    -> (11, 211, '2024-06-01', 4, 'Needs improvement'),
+    -> (12, 212, '2024-06-20', 8, 'Shows initiative'),
+    -> (13, 213, '2024-07-01', 9, 'Very good work'),
+    -> (14, 214, '2024-07-15', 10, 'Top performer'),
+    -> (15, 215, '2024-08-01', 7, 'Good under pressure');
+Query OK, 15 rows affected (0.454 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+mysql> show tables;
++-------------------------+
+| Tables_in_hr_management |
++-------------------------+
+| departments             |
+| employees               |
+| evaluations             |
+| leaverequests           |
+| salaries                |
++-------------------------+
+5 rows in set (0.052 sec)
+mysql> describe  departments;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| DepartmentID | int          | NO   | PRI | NULL    | auto_increment |
+| Name         | varchar(100) | NO   |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.034 sec)
+ describe  employees;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| EmployeeID   | int          | NO   | PRI | NULL    | auto_increment |
+| Name         | varchar(100) | YES  |     | NULL    |                |
+| Email        | varchar(100) | YES  | UNI | NULL    |                |
+| HireDate     | date         | YES  |     | NULL    |                |
+| DepartmentID | int          | YES  | MUL | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.015 sec)
+describe evaluations;
++--------------+------+------+-----+---------+----------------+
+| Field        | Type | Null | Key | Default | Extra          |
++--------------+------+------+-----+---------+----------------+
+| EvaluationID | int  | NO   | PRI | NULL    | auto_increment |
+| EmployeeID   | int  | YES  | MUL | NULL    |                |
+| EvalDate     | date | YES  |     | NULL    |                |
+| Score        | int  | YES  |     | NULL    |                |
+| Comment      | text | YES  |     | NULL    |                |
++--------------+------+------+-----+---------+----------------+
+5 rows in set (0.016 sec)
+ describe  leaverequests;
++------------+---------------------------------------+------+-----+---------+----------------+
+| Field      | Type                                  | Null | Key | Default | Extra          |
++------------+---------------------------------------+------+-----+---------+----------------+
+| RequestID  | int                                   | NO   | PRI | NULL    | auto_increment |
+| EmployeeID | int                                   | YES  | MUL | NULL    |                |
+| StartDate  | date                                  | YES  |     | NULL    |                |
+| EndDate    | date                                  | YES  |     | NULL    |                |
+| Reason     | text                                  | YES  |     | NULL    |                |
+| Status     | enum('Pending','Approved','Rejected') | YES  |     | NULL    |                |
++------------+---------------------------------------+------+-----+---------+----------------+
+ mysql> describe  salaries;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| SalaryID    | int           | NO   | PRI | NULL    | auto_increment |
+| EmployeeID  | int           | YES  | UNI | NULL    |                |
+| BasicSalary | decimal(10,2) | YES  |     | NULL    |                |
+| Bonus       | decimal(10,2) | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+4 rows in set (0.026 sec)
+select*from  departments;
++--------------+------------+
+| DepartmentID | Name       |
++--------------+------------+
+|            1 | HR         |
+|            2 | IT         |
+|            3 | Finance    |
+|            4 | Marketing  |
+|            5 | Operations |
++--------------+------------+
+5 rows in set (0.007 sec)
+ysql> select *from employees;
++------------+---------------+---------------------------+------------+--------------+
+| EmployeeID | Name          | Email                     | HireDate   | DepartmentID |
++------------+---------------+---------------------------+------------+--------------+
+|        201 | Ali Hassan    | ali.hassan@example.com    | 2022-03-15 |            1 |
+|        202 | Mona Saeed    | mona.saeed@example.com    | 2021-07-20 |            2 |
+|        203 | Ahmed Nabil   | ahmed.nabil@example.com   | 2020-05-10 |            3 |
+|        204 | Sara Mostafa  | sara.mostafa@example.com  | 2022-12-01 |            1 |
+|        205 | Youssef Adel  | youssef.adel@example.com  | 2023-01-25 |            2 |
+|        206 | Nour Magdy    | nour.magdy@example.com    | 2021-04-14 |            3 |
+|        207 | Khaled Yassin | khaled.yassin@example.com | 2020-09-30 |            2 |
+|        208 | Rana Sherif   | rana.sherif@example.com   | 2022-08-19 |            1 |
+|        209 | Hany Fathy    | hany.fathy@example.com    | 2023-03-22 |            3 |
+|        210 | Laila Amr     | laila.amr@example.com     | 2021-11-11 |            2 |
+|        211 | Tamer Helmy   | tamer.helmy@example.com   | 2020-02-05 |            3 |
+|        212 | Farida Ayman  | farida.ayman@example.com  | 2023-06-18 |            1 |
+|        213 | Mahmoud Salah | mahmoud.salah@example.com | 2022-07-07 |            2 |
+|        214 | Heba Zaki     | heba.zaki@example.com     | 2023-09-09 |            1 |
+|        215 | Omar Reda     | omar.reda@example.com     | 2024-01-01 |            3 |
++------------+---------------+---------------------------+------------+--------------+mysql> select *from  evaluations;
++--------------+------------+------------+-------+------------------------+
+| EvaluationID | EmployeeID | EvalDate   | Score | Comment                |
++--------------+------------+------------+-------+------------------------+
+|            1 |        201 | 2024-01-15 |     9 | Great work ethic       |
+|            2 |        202 | 2024-01-20 |     8 | Good team player       |
+|            3 |        203 | 2024-02-01 |     7 | Improved performance   |
+|            4 |        204 | 2024-02-18 |     6 | Needs supervision      |
+|            5 |        205 | 2024-03-05 |     9 | Excellent contribution |
+|            6 |        206 | 2024-03-25 |     5 | Below expectations     |
+|            7 |        207 | 2024-04-01 |     8 | Positive attitude      |
+|            8 |        208 | 2024-04-15 |    10 | Outstanding            |
+|            9 |        209 | 2024-05-01 |     6 | Average work           |
+|           10 |        210 | 2024-05-10 |     7 | Consistent             |
+|           11 |        211 | 2024-06-01 |     4 | Needs improvement      |
+|           12 |        212 | 2024-06-20 |     8 | Shows initiative       |
+|           13 |        213 | 2024-07-01 |     9 | Very good work         |
+|           14 |        214 | 2024-07-15 |    10 | Top performer          |
+|           15 |        215 | 2024-08-01 |     7 | Good under pressure    |
++--------------+------------+------------+-------+------------------------+
+15 rows in set (0.005 sec)
+mysql> select*from  leaverequests;
++-----------+------------+------------+------------+-----------+----------+
+| RequestID | EmployeeID | StartDate  | EndDate    | Reason    | Status   |
++-----------+------------+------------+------------+-----------+----------+
+|         1 |        201 | 2024-01-10 | 2024-01-15 | Vacation  | Approved |
+|         2 |        202 | 2024-02-01 | 2024-02-03 | Medical   | Pending  |
+|         3 |        203 | 2024-03-12 | 2024-03-17 | Emergency | Rejected |
+|         4 |        204 | 2024-04-05 | 2024-04-09 | Personal  | Approved |
+|         5 |        205 | 2024-05-01 | 2024-05-02 | Sick      | Approved |
+|         6 |        206 | 2024-05-10 | 2024-05-15 | Maternity | Pending  |
+|         7 |        207 | 2024-06-01 | 2024-06-06 | Vacation  | Approved |
+|         8 |        208 | 2024-07-10 | 2024-07-15 | Emergency | Rejected |
+|         9 |        209 | 2024-08-01 | 2024-08-05 | Travel    | Approved |
+|        10 |        210 | 2024-09-15 | 2024-09-18 | Personal  | Approved |
+|        11 |        211 | 2024-10-10 | 2024-10-13 | Sick      | Pending  |
+|        12 |        212 | 2024-11-01 | 2024-11-07 | Vacation  | Approved |
+|        13 |        213 | 2024-12-05 | 2024-12-10 | Emergency | Rejected |
+|        14 |        214 | 2025-01-01 | 2025-01-04 | Medical   | Approved |
+|        15 |        215 | 2025-02-10 | 2025-02-12 | Personal  | Pending  |
++-----------+------------+------------+------------+-----------+----------+
+15 rows in set (0.007 sec)
+mysql> select*from salaries;
++----------+------------+-------------+--------+
+| SalaryID | EmployeeID | BasicSalary | Bonus  |
++----------+------------+-------------+--------+
+|        1 |        201 |     5000.00 | 200.00 |
+|        2 |        202 |     6000.00 | 300.00 |
+|        3 |        203 |     5500.00 | 250.00 |
+|        4 |        204 |     5800.00 | 270.00 |
+|        5 |        205 |     6200.00 | 400.00 |
+|        6 |        206 |     5300.00 | 150.00 |
+|        7 |        207 |     5100.00 | 100.00 |
+|        8 |        208 |     4950.00 | 120.00 |
+|        9 |        209 |     7000.00 | 500.00 |
+|       10 |        210 |     6700.00 | 350.00 |
+|       11 |        211 |     5600.00 | 180.00 |
+|       12 |        212 |     5250.00 | 130.00 |
+|       13 |        213 |     6100.00 | 300.00 |
+|       14 |        214 |     4800.00 | 100.00 |
+|       15 |        215 |     7500.00 | 600.00 |
++----------+------------+-------------+--------+
+15 rows in set (0.005 sec)
+------- out put of some Queries--------
+> SELECT * FROM Employees WHERE Name LIKE '%Ali%';
++------------+------------+------------------------+------------+--------------+
+| EmployeeID | Name       | Email                  | HireDate   | DepartmentID |
++------------+------------+------------------------+------------+--------------+
+|        201 | Ali Hassan | ali.hassan@example.com | 2022-03-15 |            1 |
++------------+------------+------------------------+------------+--------------+
+1 row in set (0.326 sec)
+SELECT AVG(BasicSalary + Bonus) AS AverageTotalSalary FROM Salaries;
++--------------------+
+| AverageTotalSalary |
++--------------------+
+|        6050.000000 |
++--------------------+
+ SELECT d.Name, COUNT(*) AS TotalEmployees
+    -> FROM Employees e
+    -> JOIN Departments d ON e.DepartmentID = d.DepartmentID
+    -> GROUP BY d.Name;
++---------+----------------+
+| Name    | TotalEmployees |
++---------+----------------+
+| HR      |              5 |
+| IT      |              5 |
+| Finance |              5 |
++---------+----------------+
+ SELECT * FROM Employees ORDER BY HireDate ASC;
++------------+---------------+---------------------------+------------+--------------+
+| EmployeeID | Name          | Email                     | HireDate   | DepartmentID |
++------------+---------------+---------------------------+------------+--------------+
+|        211 | Tamer Helmy   | tamer.helmy@example.com   | 2020-02-05 |            3 |
+|        203 | Ahmed Nabil   | ahmed.nabil@example.com   | 2020-05-10 |            3 |
+|        207 | Khaled Yassin | khaled.yassin@example.com | 2020-09-30 |            2 |
+|        206 | Nour Magdy    | nour.magdy@example.com    | 2021-04-14 |            3 |
+|        202 | Mona Saeed    | mona.saeed@example.com    | 2021-07-20 |            2 |
+|        210 | Laila Amr     | laila.amr@example.com     | 2021-11-11 |            2 |
+|        201 | Ali Hassan    | ali.hassan@example.com    | 2022-03-15 |            1 |
+|        213 | Mahmoud Salah | mahmoud.salah@example.com | 2022-07-07 |            2 |
+|        208 | Rana Sherif   | rana.sherif@example.com   | 2022-08-19 |            1 |
+|        204 | Sara Mostafa  | sara.mostafa@example.com  | 2022-12-01 |            1 |
+|        205 | Youssef Adel  | youssef.adel@example.com  | 2023-01-25 |            2 |
+|        209 | Hany Fathy    | hany.fathy@example.com    | 2023-03-22 |            3 |
+|        212 | Farida Ayman  | farida.ayman@example.com  | 2023-06-18 |            1 |
+|        214 | Heba Zaki     | heba.zaki@example.com     | 2023-09-09 |            1 |
+|        215 | Omar Reda     | omar.reda@example.com     | 2024-01-01 |            3 |
++------------+---------------+---------------------------+------------+--------------+
+15 rows in set (0.005 sec)
+ SELECT e.Name, lr.StartDate, lr.EndDate
+    -> FROM LeaveRequests lr
+    -> JOIN Employees e ON lr.EmployeeID = e.EmployeeID
+    -> WHERE lr.Status = 'Approved';
++---------------+------------+------------+
+| Name          | StartDate  | EndDate    |
++---------------+------------+------------+
+| Ali Hassan    | 2024-01-10 | 2024-01-15 |
+| Sara Mostafa  | 2024-04-05 | 2024-04-09 |
+| Youssef Adel  | 2024-05-01 | 2024-05-02 |
+| Khaled Yassin | 2024-06-01 | 2024-06-06 |
+| Hany Fathy    | 2024-08-01 | 2024-08-05 |
+| Laila Amr     | 2024-09-15 | 2024-09-18 |
+| Farida Ayman  | 2024-11-01 | 2024-11-07 |
+| Heba Zaki     | 2025-01-01 | 2025-01-04 |
++---------------+------------+------------+
+8 rows in set (0.325 sec)
+ SELECT E.Name, EV.Score
+    -> FROM Employees E
+    -> JOIN Evaluations EV ON E.EmployeeID = EV.EmployeeID
+    -> ORDER BY EV.Score DESC;
++---------------+-------+
+| Name          | Score |
++---------------+-------+
+| Rana Sherif   |    10 |
+| Heba Zaki     |    10 |
+| Ali Hassan    |     9 |
+| Youssef Adel  |     9 |
+| Mahmoud Salah |     9 |
+| Mona Saeed    |     8 |
+| Khaled Yassin |     8 |
+| Farida Ayman  |     8 |
+| Ahmed Nabil   |     7 |
+| Laila Amr     |     7 |
+| Omar Reda     |     7 |
+| Sara Mostafa  |     6 |
+| Hany Fathy    |     6 |
+| Nour Magdy    |     5 |
+| Tamer Helmy   |     4 |
++---------------+-------+
+15 rows in set (0.049 sec)
+ SELECT D.Name AS DepartmentName, COUNT(E.EmployeeID) AS NumEmployees
+    -> FROM Departments D
+    -> LEFT JOIN Employees E ON D.DepartmentID = E.DepartmentID
+    -> GROUP BY D.Name;
++----------------+--------------+
+| DepartmentName | NumEmployees |
++----------------+--------------+
+| HR             |            5 |
+| IT             |            5 |
+| Finance        |            5 |
+| Marketing      |            0 |
+| Operations     |            0 |
++----------------+--------------+
+ SELECT D.Name AS DepartmentName, COUNT(E.EmployeeID) AS NumEmployees
+    -> FROM Departments D
+    -> LEFT JOIN Employees E ON D.DepartmentID = E.DepartmentID
+    -> GROUP BY D.Name;
++----------------+--------------+
+| DepartmentName | NumEmployees |
++----------------+--------------+
+| HR             |            5 |
+| IT             |            5 |
+| Finance        |            5 |
+| Marketing      |            0 |
+| Operations     |            0 |
++----------------+--------------+
+SELECT D.Name AS DepartmentName, SUM(S.Bonus) AS TotalBonus
+    -> FROM Employees E
+    -> JOIN Salaries S ON E.EmployeeID = S.EmployeeID
+    -> JOIN Departments D ON E.DepartmentID = D.DepartmentID
+    -> GROUP BY D.Name;
++----------------+------------+
+| DepartmentName | TotalBonus |
++----------------+------------+
+| HR             |     820.00 |
+| IT             |    1450.00 |
+| Finance        |    1680.00 |
++----------------+------------+
